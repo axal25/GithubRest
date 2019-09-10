@@ -10,6 +10,7 @@ import utils.system.print.SystemPrintClassNameAndFunctionOut;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Service("repoService")
 public class RepoService {
@@ -25,8 +26,8 @@ public class RepoService {
     }
 
     public Repo getRepoByUserNameAndRepoName(
-            @Valid @NotBlank String userName,
-            @Valid @NotBlank String repoName
+            @Valid @NotNull @NotBlank String userName,
+            @Valid @NotNull @NotBlank String repoName
     ) throws FetchException {
         final String functionName = "public Repo getRepoByUserNameAndRepoName(String userName, String repoName)";
         SystemPrintClassNameAndFunctionOut systemPrintClassNameAndFunctionOut = new SystemPrintClassNameAndFunctionOut();
