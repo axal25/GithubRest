@@ -30,7 +30,8 @@ public class RepoDao {
         final String url = host + "/repos/" + userName + "/" + repoName;
         String fullUri = "https://api.github.com/repos/axal25/BareJS";
 
-        Repo repo = this.fetcher.get( url );
+        jacek.oles.github.rest.model.com.github.api.Repo githubApiRepo = this.fetcher.get( url );
+        Repo repo = new Repo( githubApiRepo );
 
         systemPrintClassNameAndFunctionOut.printEnd(this.getClass().getName(), functionName);
         return repo;

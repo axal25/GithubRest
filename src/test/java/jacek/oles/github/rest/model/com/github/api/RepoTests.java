@@ -2,7 +2,6 @@ package jacek.oles.github.rest.model.com.github.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jacek.oles.github.rest.model.Json;
-import jacek.oles.github.rest.model.Repo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
@@ -11,37 +10,49 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class RepoTests {
+    public static final String userName = "axal25";
+    public static final String repoName = "BareJS";
 
     @DisplayName("Test Spring com.github.api.Repo class #1")
     @Test
-    public void testComGithubApiUserClass1() {
-        RestTemplate restTemplate = new RestTemplate();
-        String fullUri = "https://api.github.com/repos/axal25/BareJS";
-        Repo repo = restTemplate.getForObject(fullUri, Repo.class);
+    public void testComGithubApiRepoClass1() {
+        Repo repo = getGithubApiRepo();
         assertNotEquals(null, repo);
     }
 
     @DisplayName("Test Spring com.github.api.User class #2")
     @Test
-    public void testComGithubApiUserClass2() throws Exception {
+    public void testComGithubApiRepoClass2() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         Repo expectedRepo = null;
         String jsonExpectedRepo = this.getAxal25BareJSRepoJsonString();
         Object unknownObject = Json.toObject(jsonExpectedRepo, Repo.class);
         if(unknownObject instanceof Repo) {
             expectedRepo = ((Repo) unknownObject);
-            RestTemplate restTemplate = new RestTemplate();
-            String fullUri = "https://api.github.com/repos/axal25/BareJS";
-            Repo actualRepo = restTemplate.getForObject(fullUri, Repo.class);
-            System.out.println();
-            System.out.println("expectedRepo: \t" + expectedRepo);
-            System.out.println("actualRepo: \t" + actualRepo);
-            System.out.println();
+            Repo actualRepo = getGithubApiRepo();
+            printInfo( expectedRepo, actualRepo );
             assertEquals(expectedRepo.toString(), actualRepo.toString());
         } else if(unknownObject instanceof String) {
             String eMsg = (String) unknownObject;
             System.err.println("Error: " + eMsg);
         } else throw new Exception("unknownObject of unknown type");
+    }
+
+    public static jacek.oles.github.rest.model.com.github.api.Repo getGithubApiRepo() {
+        RestTemplate restTemplate = new RestTemplate();
+        String fullUri = "https://api.github.com/repos/" + RepoTests.userName + "/" + RepoTests.repoName;
+        Repo githubApiRepo = restTemplate.getForObject(fullUri, Repo.class);
+        return githubApiRepo;
+    }
+
+    private void printInfo(Repo expectedRepo, Repo actualRepo) {
+        System.out.println();
+        System.err.println("This test may cause errors in the future if any of the fields returned by Github API is updated." + "\n" +
+                "List of fields: full_name, description, clone_url, created_at, stargazers_count)." + "\n" +
+                "In this case update of mock-data inside jacek.oles.github.rest.mode.com.github.api.RepoTests is needed.");
+        System.out.println("expectedRepo: \t" + expectedRepo);
+        System.out.println("actualRepo: \t" + actualRepo);
+        System.out.println();
     }
 
     public String getAxal25BareJSRepoJsonString() {

@@ -33,7 +33,7 @@ public class RepoService {
         SystemPrintClassNameAndFunctionOut systemPrintClassNameAndFunctionOut = new SystemPrintClassNameAndFunctionOut();
         systemPrintClassNameAndFunctionOut.printBegin(this.getClass().getName(), functionName);
 
-        Repo repo = this.repoDao.getRepoByUserNameAndRepoName( userName, repoName );
+        jacek.oles.github.rest.model.Repo repo = this.repoDao.getRepoByUserNameAndRepoName( userName, repoName );
 
         systemPrintClassNameAndFunctionOut.printEnd(this.getClass().getName(), functionName);
         return repo;

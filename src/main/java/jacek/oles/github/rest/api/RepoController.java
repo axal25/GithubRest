@@ -26,7 +26,7 @@ public class RepoController {
 
     @GetMapping(path = "{userName}/{repoName}")
     public Repo getRepoByUserNameAndRepoName(@PathVariable("userName") String userName,
-                                                   @PathVariable("repoName") String repoName) throws FetchException {
+                                             @PathVariable("repoName") String repoName) throws FetchException {
         final String functionName = "@GetMapping(path = \"{userName}/{repoName}\") " +
                 "public Repo getRepoByUserNameAndRepoName(@PathVariable(\"userName\") String userName, " +
                 "@PathVariable(\"repoName\") String repoName)";
@@ -34,7 +34,7 @@ public class RepoController {
         SystemPrintClassNameAndFunctionOut systemPrintClassNameAndFunctionOut = new SystemPrintClassNameAndFunctionOut();
         systemPrintClassNameAndFunctionOut.printBegin(this.getClass().getName(), functionName);
 
-        Repo repo = this.repoService.getRepoByUserNameAndRepoName(userName, repoName);
+        jacek.oles.github.rest.model.Repo repo = this.repoService.getRepoByUserNameAndRepoName(userName, repoName);
 
         systemPrintClassNameAndFunctionOut.printEnd(this.getClass().getName(), functionName);
         return repo;

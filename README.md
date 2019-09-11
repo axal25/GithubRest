@@ -1,7 +1,44 @@
 # REST Service using Github API
-Serves information about given repository of particular user
 
----------------------------------------------
+### Serves information about given repository of particular user
+
+### Technology stack
+ 1. java-1.11.0-openjdk-amd64 (11.0.4)
+ 2. Apache Maven 3.6.0
+
+---
+### Functionality
+1. REST service on address \
+    {HOST}/repositories/{userName}/{repositoryName}
+2. Fetching method from \
+    api.github.com/repos/{userName}/{repositoryName} \
+    [example](https://api.github.com/repos/axal25/BareJS)
+
+---
+### Useful links
+[Lombok package & plugin config](https://www.baeldung.com/lombok-ide) \
+[Test tutorial article](https://www.mkyong.com/spring-boot/spring-boot-junit-5-mockito/)
+---
+### To do
+    1. [DONE] Change returned model class to dedicated for this REST service (wrong field names)
+    2. tidy up pom.xml
+    3. plug error code and error message from github response to custom error
+    4. end-to-end tests
+        4.1. [DONE] jacek.oles.github.res.model.com.github.api.Repo 
+        4.2. [DONE] jacek.oles.github.res.model.Repo
+        4.3. Fetcher
+            4.3.1. FetchException
+        4.4. RepoDao
+            [OPTIONAL] 4.4.1. FetchException
+        4.5. RepoService
+            [OPTIONAL] 4.5.1. FetchException
+        4.6. RepoController
+            4.6.1. ClientSideError
+    5. error page as json
+
+---
+---
+---
 
 **Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
 

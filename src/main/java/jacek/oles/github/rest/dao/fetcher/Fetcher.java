@@ -1,6 +1,6 @@
 package jacek.oles.github.rest.dao.fetcher;
 
-import jacek.oles.github.rest.model.Repo;
+import jacek.oles.github.rest.model.com.github.api.Repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import utils.exceptions.ExceptionMessageGenerator;
 import utils.system.print.SystemPrintClassNameAndFunctionOut;
-
 import java.util.ArrayList;
 import java.util.List;
 
