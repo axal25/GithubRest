@@ -1,32 +1,61 @@
 package jacek.oles.github.rest.dao.fetcher;
 
+import jacek.oles.github.rest.model.Json;
+import lombok.Getter;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
 
-public class FetchException extends Exception {
+@Getter
+public class FetchException extends IOException {
     private final String callingClassName, callingFunctionName;
-    private final List<Exception> exceptionList;
     private final HttpStatus httpStatus;
+    private final HttpHeaders httpHeaders;
+    private final String httpResponseBody;
+    private final int rawStatusCode;
+    private final String statusText;
 
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
+    private final Throwable cause;
+    private final String message;
 
     public FetchException(
             String callingClassName,
             String callingFunctionName,
-            String cause,
             HttpStatus httpStatus,
-            List<Exception> exceptionList
+            HttpHeaders httpHeaders,
+            String httpResponseBody,
+            int rawStatusCode,
+            String statusText
     ) {
-        super(callingClassName + " >>> " + callingFunctionName + " >>> " + FetchException.class.getName() + ": " + "\n\r" +
-            "Exception cause(custom): " + cause,
-            new Throwable(cause)
+        super(callingClassName + " >>> " + callingFunctionName + " >>> " + FetchException.class.getName() + ": " + "\n\r",
+            new Throwable("{ \"rawStatusCode\" : \"" + rawStatusCode + "\" }, { \"statusText\" : \"" + statusText + "\" }")
         );
         this.callingClassName = callingClassName;
         this.callingFunctionName = callingFunctionName;
         this.httpStatus = httpStatus;
-        this.exceptionList = exceptionList;
+        this.httpHeaders = httpHeaders;
+        this.httpResponseBody = httpResponseBody;
+        this.rawStatusCode = rawStatusCode;
+        this.statusText = statusText;
+
+        this.cause = super.getCause();
+        this.message = super.getMessage();
+    }
+
+    @Override
+    public String toString() {
+        return  "exception: " + this.getClass().getName() + ": {" + "\n" +
+                "\"callingClassName\" : \"" + this.callingFunctionName + "\"" + "\n" +
+                "\"callingFunctionName\" : \"" + this.callingFunctionName + "\"" + "\n" +
+                "\"httpStatus\" : \"" + this.httpStatus + "\"" + "\n" +
+                "\"httpHeaders\" : \"" + this.httpHeaders + "\"" + "\n" +
+                "\"httpResponseBody\" : \"" + this.httpResponseBody + "\"" + "\n" +
+                "\"rawStatusCode\" : \"" + this.rawStatusCode + "\"" + "\n" +
+                "\"statusText\" : \"" + this.statusText + "\"" + "\n" +
+                "\"message\" : \"" + this.message + "\"" + "\n" +
+//                "\t" + "\"cause\" : " + Json.toPrettyString( cause ) + "\n" +
+                "}";
     }
 }
